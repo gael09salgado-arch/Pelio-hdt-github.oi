@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Cine</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1e1e1e;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+    #searchBar {
+      padding: 5px 10px;
+      font-size: 1em;
+      width: 300px;
+      border-radius: 5px;
+      border: none;
+    }
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+    .movie-card {
+      background-color: #1e1e1e;
+      padding: 10px;
+      border-radius: 8px;
+      width: 300px;
+      box-shadow: 0 0 10px #000;
+    }
+    .movie-card iframe {
+      width: 100%;
+      height: 170px;
+      border: none;
+      border-radius: 5px;
+    }
+    .movie-title {
+      margin: 10px 0 0;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Mini Cine 🎬</h1>
+  <input type="text" id="searchBar" placeholder="Buscar película...">
+</header>
+
+<main id="movieContainer">
+  <!-- Las películas se cargarán aquí -->
+</main>
+
+<script>
+  const movies = [
+    { title: "Película 1", url: "https://www.youtube.com/embed/CKd310N1rIM" },
+    { title: "Playlist 1", url: "https://www.youtube.com/embed/videoseries?list=PLl6MiYdT7BrWLsjSRBIQzYblCeva0y-d9" },
+    { title: "Playlist 2", url: "https://www.youtube.com/embed/videoseries?list=PLPgx7nq1TtgmnDqrEEeQAeK6ddL1w0Ns" },
+    { title: "Playlist 3", url: "https://www.youtube.com/embed/videoseries?list=PL5Z2u1mox48EWWShIBGB7JKStQTlNbSl8" },
+    { title: "Playlist 4", url: "https://www.youtube.com/embed/videoseries?list=PLaAvh6IK3g3nNkIEwbEN8xgnpUBt_cy6e" }
+  ];
+
+  const container = document.getElementById('movieContainer');
+  const searchBar = document.getElementById('searchBar');
+
+  function displayMovies(filteredMovies) {
+    container.innerHTML = '';
+    filteredMovies.forEach(movie => {
+      const card = document.createElement('div');
+      card.className = 'movie-card';
+      card.innerHTML = `
+        <iframe src="${movie.url}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="movie-title">${movie.title}</div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  // Inicialmente mostrar todas las películas
+  displayMovies(movies);
+
+  // Filtrar películas por búsqueda
+  searchBar.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const filtered = movies.filter(movie => movie.title.toLowerCase().includes(searchTerm));
+    displayMovies(filtered);
+  });
+</script>
+
+</body>
+</html>
